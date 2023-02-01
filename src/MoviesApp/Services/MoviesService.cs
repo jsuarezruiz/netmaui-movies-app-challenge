@@ -8,7 +8,7 @@ namespace MoviesApp.Services
         {
             return new List<string>
             {
-                "In Teather",
+                "In Theather",
                 "Box Office",
                 "Coming Soon"
             };
@@ -36,10 +36,10 @@ namespace MoviesApp.Services
 
             var cast = new List<Cast>
             {
-                new Cast { Name = "James Mangold", Image = "actor_1.jpg", Character = "Director" },
-                new Cast { Name = "Matt Damon", Image = "actor_2.jpg", Character = "Carrol" },
-                new Cast { Name = "Christian Bale", Image = "actor_3.jpg", Character = "Ken Miles" },
-                new Cast { Name = "Caitriona Balfe", Image = "actor_4.jpg", Character = "Mollie" },
+                new Cast { Name = "James Mangold", Image = "actor_1.png", Character = "Director" },
+                new Cast { Name = "Matt Damon", Image = "actor_2.png", Character = "Carrol" },
+                new Cast { Name = "Christian Bale", Image = "actor_3.png", Character = "Ken Miles" },
+                new Cast { Name = "Caitriona Balfe", Image = "actor_4.png", Character = "Mollie" },
             };
 
             return new List<Movie>
