@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="MoviesApp.Views.MoviesView"
+    xmlns:templates="clr-namespace:MoviesApp.Views.Templates"
+    BackgroundColor="{StaticResource BackgroundColor}"
+    Shell.NavBarIsVisible="False"  
+    Title="Movies App">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+            <Color x:Key="BackgroundColor">#FFFFFF</Color>
+
+            <Style x:Key="SourceItemStyle" TargetType="Grid">
+                <Setter Property="BackgroundColor" Value="{StaticResource BackgroundColor}" />
+                <Setter Property="Padding" Value="0, 6" />
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter TargetName="SourceText" Property="Label.TextColor" Value="#B9B9C4" />
+                                    <Setter TargetName="SelectedIndicator" Property="BoxView.IsVisible" Value="False" />
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Selected">
+                                <VisualState.Setters>
+                                    <Setter TargetName="SourceText" Property="Label.TextColor" Value="#000000" />
+                                    <Setter TargetName="SelectedIndicator" Property="BoxView.IsVisible" Value="True" />
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+            </Style>
+
+            <Style x:Key="PaddingContainerStyle" TargetType="Layout">
+                <Setter Property="Padding" Value="20, 0" />
+            </Style>
+
+            <Style x:Key="LeftPaddingContainerStyle" TargetType="Layout">
+                <Setter Property="Padding" Value="20, 0, 0, 0" />
+            </Style>
+
+            <Style x:Key="NavigationIconStyle" TargetType="Image">
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="WidthRequest" Value="20" />
+            </Style>
+
+            <Style x:Key="SourceTextStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="Large" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="VerticalOptions" Value="Start" />
+            </Style>
+
+            <Color x:Key="SourceIndicatorColor">#FD6D8E</Color>
+
+            <Style x:Key="SourceIndicatorStyle" TargetType="BoxView">
+                <Setter Property="HeightRequest" Value="4" />
+                <Setter Property="WidthRequest" Value="30" />
+                <Setter Property="CornerRadius" Value="12" />
+                <Setter Property="Color" Value="{StaticResource SourceIndicatorColor}" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+            </Style>
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid
+        RowDefinitions="60, 60, Auto, *">
+        <Grid
+            ColumnDefinitions="Auto, *"
+            Style="{StaticResource PaddingContainerStyle}">
+            <Image 
+                Source="ic_menu.png"
+                Style="{StaticResource NavigationIconStyle}"/>
+            <Image
+                Grid.Column="1"
+                Source="ic_search.png"
+                HorizontalOptions="End"
+                Style="{StaticResource NavigationIconStyle}"/>
+        </Grid>
+        <Grid 
+            Grid.Row="1"
+            Style="{StaticResource LeftPaddingContainerStyle}">
+            <CollectionView
+                ItemsSource="{Binding Sources}"
+                SelectionMode="Single"
+                SelectedItem="{Binding SelectedSource, Mode=TwoWay}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout
+                        Orientation="Horizontal" 
+                        ItemSpacing="40" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Grid
+                            RowDefinitions="*, Auto"
+                            Style="{StaticResource SourceItemStyle}">
+                            <Label 
+                                x:Name="SourceText"
+                                Text="{Binding}"
+                                Style="{StaticResource SourceTextStyle}"/>
+                            <BoxView
+                                x:Name="SelectedIndicator"
+                                Grid.Row="1"
+                                Style="{StaticResource SourceIndicatorStyle}"/>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+        <Grid 
+            Grid.Row="2"
+            Style="{StaticResource LeftPaddingContainerStyle}">
+            <CollectionView
+                ItemsSource="{Binding Categories}"
+                Margin="0, 24, 0, 0">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout
+                        Orientation="Horizontal"
+                        ItemSpacing="6"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <templates:CategoryItemTemplate />
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+        <CarouselView
+            Grid.Row="3"
+            ItemsSource="{Binding Movies}" 
+            PeekAreaInsets="60"
+            Margin="0, 60">
+            <CarouselView.ItemsLayout>
+                <LinearItemsLayout 
+                    SnapPointsAlignment="Center"
+                    SnapPointsType="MandatorySingle"
+                    Orientation="Horizontal"  
+                    ItemSpacing="20" />
+            </CarouselView.ItemsLayout>
+            <CarouselView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="CurrentItem">
+                                    <VisualState.Setters>
+                                        <Setter Property="Rotation" Value="0" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="PreviousItem">
+                                    <VisualState.Setters>
+                                        <Setter Property="Rotation" Value="-10" />
+                                        <Setter Property="Opacity" Value="0.35" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="NextItem">
+                                    <VisualState.Setters>
+                                        <Setter Property="Rotation" Value="10" />
+                                        <Setter Property="Opacity" Value="0.35" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                                <VisualState x:Name="DefaultItem">
+                                    <VisualState.Setters>
+                                        <Setter Property="Opacity" Value="0.25" />
+                                    </VisualState.Setters>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <templates:MovieItemTemplate />
+                    </Grid>
+                </DataTemplate>
+            </CarouselView.ItemTemplate>
+        </CarouselView>
+    </Grid>
+</ContentPage>

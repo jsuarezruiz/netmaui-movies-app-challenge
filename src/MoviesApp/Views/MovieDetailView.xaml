@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage 
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="MoviesApp.Views.MovieDetailView"
+    xmlns:templates="clr-namespace:MoviesApp.Views.Templates"
+    xmlns:viewmodels="clr-namespace:MoviesApp.ViewModels"
+    Shell.NavBarIsVisible="False"
+    Title="MovieDetailView">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+
+            <Style x:Key="CoverContainerStyle" TargetType="Border">
+                <Setter Property="StrokeShape" Value="RoundRectangle 0, 0, 24, 24" />
+                <Setter Property="StrokeThickness" Value="0" />
+            </Style>
+
+            <Style x:Key="CoverImageStyle" TargetType="Image">
+                <Setter Property="Aspect" Value="AspectFill" />
+            </Style>
+            
+            <Style x:Key="BackIconStyle" TargetType="Label">
+                <Setter Property="Margin" Value="12" />
+            </Style>
+
+            <Style x:Key="RatingContainerStyle" TargetType="Border">
+                <Setter Property="StrokeShape" Value="RoundRectangle 48, 0, 48, 0" />
+                <Setter Property="StrokeThickness" Value="0" />
+                <Setter Property="HeightRequest" Value="80" />
+                <Setter Property="BackgroundColor" Value="White" />
+                <Setter Property="VerticalOptions" Value="Start" />
+                <Setter Property="Padding" Value="12" />
+                <Setter Property="Margin" Value="24, 160, 0, 0" />
+            </Style>
+
+            <Style x:Key="PaddingContainerStyle" TargetType="Layout">
+                <Setter Property="Padding" Value="20, 0" />
+            </Style>
+
+            <Style x:Key="MovieTitleStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="Large" />
+                <Setter Property="FontAttributes" Value="Bold" />
+            </Style>
+            
+            <Style x:Key="MovieInfoTextStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="Micro" />
+                <Setter Property="Opacity" Value="0.75" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="VerticalOptions" Value="Center" />
+            </Style>
+
+            <Color x:Key="AddButtonColor">#FD6D8E</Color>
+
+            <Style x:Key="AddButtonStyle" TargetType="Border">
+                <Setter Property="StrokeShape" Value="RoundRectangle 12" />
+                <Setter Property="StrokeThickness" Value="0" />
+                <Setter Property="BackgroundColor" Value="{StaticResource AddButtonColor}" />
+                <Setter Property="HeightRequest" Value="48" />
+                <Setter Property="WidthRequest" Value="48" />
+                <Setter Property="HorizontalOptions" Value="End" />
+                <Setter Property="VerticalOptions" Value="Center" />
+            </Style>
+
+            <Style x:Key="AddButtonTextStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="Title" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+            </Style>
+
+            <Style x:Key="CategoriesStyle" TargetType="CollectionView">
+                <Setter Property="Margin" Value="0, 12" />
+            </Style>
+            
+            <Style x:Key="SectionTitleStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="Medium" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="Margin" Value="0, 24, 0, 0" />
+            </Style>
+            
+            <Style x:Key="SummaryTextStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="TextColor" Value="DarkGray" />
+                <Setter Property="Margin" Value="0, 12" />
+            </Style>
+            
+            <Style x:Key="RatingIconStyle" TargetType="Image">
+                <Setter Property="HeightRequest" Value="24" />
+                <Setter Property="WidthRequest" Value="24" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+            </Style>
+            
+            <Style x:Key="RatingOutlineIconStyle" TargetType="Image">
+                <Setter Property="HeightRequest" Value="24" />
+                <Setter Property="WidthRequest" Value="24" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+            </Style>
+
+            <Style x:Key="InfoTitleStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="12" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Start" />
+            </Style>
+            
+            <Style x:Key="InfoSubTitleStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="8" />
+                <Setter Property="TextColor" Value="Gray" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Start" />
+            </Style>
+
+            <Color x:Key="MetascoreColor">#51CF67</Color>
+
+            <Style x:Key="MetascoreStyle" TargetType="Border">
+                <Setter Property="StrokeShape" Value="Rectangle" />
+                <Setter Property="StrokeThickness" Value="0" />
+                <Setter Property="BackgroundColor" Value="{StaticResource MetascoreColor}" />
+                <Setter Property="HeightRequest" Value="24" />
+                <Setter Property="WidthRequest" Value="24" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+            </Style>
+
+            <Style x:Key="MetascoreTextStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="Micro" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+            </Style>
+            
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid
+        RowDefinitions="200, Auto, Auto, *">
+        <!-- COVER -->
+        <Grid>
+            <Border
+                Style="{StaticResource CoverContainerStyle}">
+                <Image 
+                    Source="{Binding Movie.Cover}"
+                    Style="{StaticResource CoverImageStyle}"/>
+            </Border>
+            <Label 
+                Text="Back"
+                Style="{StaticResource BackIconStyle}">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer         
+                        Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodels:MovieDetailViewModel}}, Path=GoBackCommand}"/>
+                </Label.GestureRecognizers>
+            </Label>
+        </Grid>
+        <!-- INFO -->
+        <Grid
+            Grid.Row="1"
+            ColumnDefinitions="Auto, Auto, Auto, *"
+            RowDefinitions="Auto, Auto, *"
+            Margin="0, 80, 0, 0"
+            Style="{StaticResource PaddingContainerStyle}">
+            <Label
+                Grid.ColumnSpan="3"
+                Text="{Binding Movie.Title}"
+                Style="{StaticResource MovieTitleStyle}"/>
+            <Label
+                Grid.Row="1"
+                Text="2019"
+                Style="{StaticResource MovieInfoTextStyle}"/>
+            <Label
+                Grid.Column="1"
+                Grid.Row="1"
+                Text="PG-13"
+                Style="{StaticResource MovieInfoTextStyle}"/>
+            <Label
+                Grid.Column="2"
+                Grid.Row="1"
+                Text="2h 32 min"
+                Style="{StaticResource MovieInfoTextStyle}"/>
+            <Border
+                Grid.Column="3"
+                Grid.Row="0"
+                Grid.RowSpan="2"
+                Style="{StaticResource AddButtonStyle}">
+                <Label 
+                    Text="+"
+                    Style="{StaticResource AddButtonTextStyle}"/>
+            </Border>
+            <CollectionView 
+                Grid.ColumnSpan="4"
+                Grid.Row="2"
+                ItemsSource="{Binding Movie.Categories}"
+                Style="{StaticResource CategoriesStyle}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout
+                        Orientation="Horizontal"
+                        ItemSpacing="6"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <templates:CategoryItemTemplate />
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+        <!-- PLOT SUMMARY -->
+        <Grid
+            Grid.Row="2"
+            RowDefinitions="Auto, *"
+            Style="{StaticResource PaddingContainerStyle}">
+            <Label 
+                Text="Plot Summary"
+                Style="{StaticResource SectionTitleStyle}"/>
+            <Label
+                Grid.Row="1"
+                Text="{Binding Movie.Summary}"
+                Style="{StaticResource SummaryTextStyle}"/>
+        </Grid>
+        <!-- CAST & CREW -->
+        <Grid
+            Grid.Row="3"
+            RowDefinitions="Auto, 160"
+            Style="{StaticResource PaddingContainerStyle}">
+            <Label 
+                Text="Cast Crew"
+                Style="{StaticResource SectionTitleStyle}" />
+            <CollectionView
+                Grid.Row="1"
+                ItemsSource="{Binding Movie.Cast}">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout
+                        Orientation="Horizontal" 
+                        ItemSpacing="24" />
+                </CollectionView.ItemsLayout>
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <templates:CastItemTemplate />
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </Grid>
+        <!-- RATING BANNER -->
+        <Border
+            Grid.Row="0"
+            Grid.RowSpan="4"
+            Style="{StaticResource RatingContainerStyle}">
+            <Border.Shadow>
+                <Shadow 
+                    Opacity="0.5"
+                    Radius="12"
+                    Offset="0, 6"/>
+            </Border.Shadow>
+            <Grid
+                ColumnDefinitions="*, *, *">
+                <Grid
+                    RowSpacing="0"
+                    RowDefinitions="*, Auto, Auto">
+                    <Image
+                        Source="ic_star.png"
+                        Style="{StaticResource RatingIconStyle}"/>
+                    <Label 
+                        Grid.Row="1"
+                        Text="{Binding Movie.Rating}"
+                        Style="{StaticResource InfoTitleStyle}"/>
+                    <Label
+                        Grid.Row="2"
+                        Text="150212"
+                        Style="{StaticResource InfoSubTitleStyle}"/>
+                </Grid>
+                <Grid
+                    Grid.Column="1"
+                    RowSpacing="0"
+                    RowDefinitions="*, *, *">
+                    <Image
+                        Source="ic_star_outline.png"
+                        Style="{StaticResource RatingOutlineIconStyle}"/>
+                    <Label
+                        Grid.Row="1"
+                        Text="Rate This"
+                        Style="{StaticResource InfoTitleStyle}"/>
+                </Grid>
+                <Grid
+                    RowSpacing="0"
+                    RowDefinitions="*, *, *"
+                    Grid.Column="2">
+                    <Border
+                        Style="{StaticResource MetascoreStyle}">
+                        <Label
+                            Text="{Binding Movie.Metascore}"
+                            Style="{StaticResource MetascoreTextStyle}"/>
+                    </Border>
+                    <Label
+                        Grid.Row="1"
+                        Text="Metascore"
+                        Style="{StaticResource InfoTitleStyle}"/>
+                    <Label
+                        Grid.Row="2"
+                        Text="62 critic reviews"
+                        Style="{StaticResource InfoSubTitleStyle}"/>
+                </Grid>
+            </Grid>
+        </Border>
+    </Grid>
+</ContentPage>
