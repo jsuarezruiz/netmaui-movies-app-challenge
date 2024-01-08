@@ -1,10 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<TargetFrameworks>net7.0-android;net7.0-ios;net7.0-maccatalyst</TargetFrameworks>
-		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net7.0-windows10.0.19041.0</TargetFrameworks>
+		<TargetFrameworks>net8.0-android;net8.0-ios;net8.0-maccatalyst</TargetFrameworks>
+		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
 		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
-		<!-- <TargetFrameworks>$(TargetFrameworks);net7.0-tizen</TargetFrameworks> -->
+		<!-- <TargetFrameworks>$(TargetFrameworks);net8.0-tizen</TargetFrameworks> -->
 		<OutputType>Exe</OutputType>
 		<RootNamespace>MoviesApp</RootNamespace>
 		<UseMaui>true</UseMaui>
@@ -49,48 +49,29 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <None Remove="Resources\Images\actor_1.png" />
-	  <None Remove="Resources\Images\actor_2.png" />
-	  <None Remove="Resources\Images\actor_3.png" />
-	  <None Remove="Resources\Images\actor_4.png" />
-	  <None Remove="Resources\Images\avatar.jpg" />
-	  <None Remove="Resources\Images\ford_v_ferrari.jpg" />
-	  <None Remove="Resources\Images\ic_menu.svg" />
-	  <None Remove="Resources\Images\ic_search.svg" />
-	  <None Remove="Resources\Images\ic_star.svg" />
-	  <None Remove="Resources\Images\ic_star_outline.svg" />
-	  <None Remove="Resources\Images\ic_star_yellow.svg" />
-	  <None Remove="Resources\Images\insideout.jpg" />
+		<None Remove="Resources\Images\actor_1.png" />
+		<None Remove="Resources\Images\actor_2.png" />
+		<None Remove="Resources\Images\actor_3.png" />
+		<None Remove="Resources\Images\actor_4.png" />
+		<None Remove="Resources\Images\avatar.jpg" />
+		<None Remove="Resources\Images\ford_v_ferrari.jpg" />
+		<None Remove="Resources\Images\ic_menu.svg" />
+		<None Remove="Resources\Images\ic_search.svg" />
+		<None Remove="Resources\Images\ic_star.svg" />
+		<None Remove="Resources\Images\ic_star_outline.svg" />
+		<None Remove="Resources\Images\ic_star_yellow.svg" />
+		<None Remove="Resources\Images\insideout.jpg" />
 	</ItemGroup>
 
 	<ItemGroup>
+		<PackageReference Include="Microsoft.Maui.Controls" Version="8.0.5" />
+		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="8.0.5" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.1.0" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectCapability Include="MauiScenarioTesting" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Compile Update="Views\Templates\CastItemTemplate.xaml.cs">
-	    <DependentUpon>CastItemTemplate.xaml</DependentUpon>
-	  </Compile>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <MauiXaml Update="Views\Templates\CastItemTemplate.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Templates\CategoryItemTemplate.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Templates\MovieItemTemplate.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	  <MauiXaml Update="Views\Templates\SourceItemTemplate.xaml">
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
 	</ItemGroup>
 
 </Project>
